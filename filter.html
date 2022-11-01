@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var request = new XMLHttpRequest();
+        request.open('GET','https://restcountries.com/v3.1/all',true)
+        request.send();
+        request.onload = function(){
+            var data = JSON.parse(request.response);
+            console.log(data);
+
+
+        // Filter countries in ASIA
+        var result = data.filter((elements)=>elements.region=="Asia")
+        console.log(result);
+
+        //population less tha 2lakhs
+        var population =data.filter((elements)=>elements.population<200000)
+        console.log(population);
+        
+        //total population
+        var totalPop = data.reduce((acc,elements)=>acc+elements.population,0)
+        console.log(totalPop);
+        
+        //forEach
+        data.forEach((element)=>console.log(`
+        country name:${element.name.common}
+        capital     :${element.capital}
+        flag        :${element.flags.png}`))
+};
+    </script>
+</body>
+</html>
